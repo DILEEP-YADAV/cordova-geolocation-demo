@@ -97,10 +97,11 @@ h1 {
     margin: 0px 5px;
 }
 
-#geoSwitch, #geoLogClear {
+#buttons button {
     width: 120px;
     height: 30px;
     margin-left: 20px;
+    margin-top: 5px;
 }
 
 #geoLog {

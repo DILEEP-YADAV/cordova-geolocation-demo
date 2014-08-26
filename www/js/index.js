@@ -19,6 +19,7 @@ var app = {
 
         document.getElementById('geoSwitch').addEventListener('click', this.onGeoSwitchClicked);
         document.getElementById('geoLogClear').addEventListener('click', this.onGeoLogClearClicked);
+        document.getElementById('sendEmail').addEventListener('click', this.onSendEmailClicked);
     },
 
     // deviceready Event Handler
@@ -48,6 +49,14 @@ var app = {
 
     onAppResume: function() {
         app.log('--- App moved into foreground ---');
+    },
+
+    onSendEmailClicked: function() {
+        window.plugin.email.open({
+            subject: "Cordova geo data",
+            body: document.getElementById('geoLog').innerHTML,
+            isHtml: true
+        });
     },
 
     onGeoSwitchClicked: function() {
