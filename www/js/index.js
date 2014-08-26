@@ -52,13 +52,24 @@ var app = {
 
     onGeoSwitchClicked: function() {
         if (!app.running) {
-            app.running = true;
-            app.log('Started tracking');
-            document.getElementById('geoSwitch').innerText = 'Stop tracking';
+            var options = {};
+
+            var frequency = document.getElementById('optionFrequency').value;
+            if (frequency != '') {
+                options['maximumAge'] = parseInt(frequency, 10);
+            }
+
+            if (document.getElementById('optionHighAccuracy').checked) {
+                options['enableHighAccuracy'] = true;
+            }
 
             app.watchId = navigator.geolocation.watchPosition(app.onGeoDataReceived,
                                                               app.onGeoError,
-                                                              {});
+                                                              options);
+
+            app.running = true;
+            app.log('Started tracking (' + JSON.stringify(options) + ')');
+            document.getElementById('geoSwitch').innerText = 'Stop tracking';
         } else {
             app.running = false;
             app.log('Stopped tracking');
