@@ -107,6 +107,8 @@ var app = {
         var div = document.getElementById('geoLog');
         div.innerHTML = "[" + timestamp + "] " + text + "<br>" + div.innerHTML;
 
+        console.log(text);
+
         localStorage['log'] = div.innerHTML;
     }
 };
