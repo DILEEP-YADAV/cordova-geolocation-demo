@@ -20,9 +20,12 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        console.log('onDeviceReady');
+        document.getElementById('geoLog').innerHTML = localStorage['log'] ? localStorage['log'] : '';
+
         document.querySelector('.loading').style.display = 'none';
         document.getElementById('main').style.display = 'block';
+
+        app.log('--- App started ---');
     },
 
     onGeoSwitchClicked: function() {
@@ -39,6 +42,7 @@ var app = {
 
     onGeoLogClearClicked: function() {
         document.getElementById('geoLog').innerHTML = '';
+        localStorage['log'] = '';
     },
 
     // Update DOM on a Received Event
@@ -62,5 +66,7 @@ var app = {
             app.pad(date.getSeconds(), 2) + "." + app.pad(date.getMilliseconds(), 3);
         var div = document.getElementById('geoLog');
         div.innerHTML = "[" + timestamp + "] " + text + "<br>" + div.innerHTML;
+
+        localStorage['log'] = div.innerHTML;
     }
 };
