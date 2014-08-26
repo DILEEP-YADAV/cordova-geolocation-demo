@@ -55,11 +55,29 @@ var app = {
             app.running = true;
             app.log('Started tracking');
             document.getElementById('geoSwitch').innerText = 'Stop tracking';
+
+            app.watchId = navigator.geolocation.watchPosition(app.onGeoDataReceived,
+                                                              app.onGeoError,
+                                                              {});
         } else {
             app.running = false;
             app.log('Stopped tracking');
             document.getElementById('geoSwitch').innerText = 'Start tracking';
+
+            if (app.watchId) {
+                navigator.geolocation.clearWatch(app.watchId);
+                app.watchId = null;
+            }
         }
+    },
+
+    onGeoDataReceived: function(position) {
+        app.log('Lat: ' + position.coords.latitude + ' Lng: ' + position.coords.longitude +
+                ' Acc: ' + position.coords.accuracy + ' Spd: ' + position.coords.speed);
+    },
+
+    onGeoError: function(error) {
+        app.log('Error ' + error.code + ': ' + error.message);
     },
 
     onGeoLogClearClicked: function() {
