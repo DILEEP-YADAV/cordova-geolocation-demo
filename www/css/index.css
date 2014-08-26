@@ -24,7 +24,7 @@ body {
     margin:0px;
     margin-top: 40px;
     padding:0px;
-    text-transform:uppercase;
+//    text-transform:uppercase;
     width:100%;
 }
 
@@ -107,4 +107,12 @@ h1 {
     width: 200px;
     height: 30px;
     margin-left: 20px;
+}
+
+#geoLog {
+    width: 300px;
+    border: 1px solid #888;
+    padding: 3px;
+    margin: 5px;
+    font: 10px 'Menlo';
 }

@@ -25,17 +25,37 @@ var app = {
     },
 
     onGeoSwitchClicked: function() {
-        if (app.running) {
-            app.running = false;
-            document.getElementById('geoSwitch').innerText = 'Start tracking';
-        } else {
+        if (!app.running) {
             app.running = true;
+            app.log('Started tracking');
             document.getElementById('geoSwitch').innerText = 'Stop tracking';
+        } else {
+            app.running = false;
+            app.log('Stopped tracking');
+            document.getElementById('geoSwitch').innerText = 'Start tracking';
         }
     },
 
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         console.log('Received Event: ' + id);
+    },
+
+    pad: function(val, n) {
+        var s = val + "";
+
+        while (s.length < n) {
+            s = "0" + s;
+        }
+
+        return s;
+    },
+
+    log: function(text) {
+        var date = new Date();
+        var timestamp = app.pad(date.getHours(), 2) + ":" + app.pad(date.getMinutes(), 2) + ":" +
+            app.pad(date.getSeconds(), 2) + "." + app.pad(date.getMilliseconds(), 3);
+        var div = document.getElementById('geoLog');
+        div.innerHTML = "[" + timestamp + "] " + text + "<br>" + div.innerHTML;
     }
 };
