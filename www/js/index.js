@@ -12,6 +12,7 @@ var app = {
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
         document.getElementById('geoSwitch').addEventListener('click', this.onGeoSwitchClicked);
+        document.getElementById('geoLogClear').addEventListener('click', this.onGeoLogClearClicked);
     },
 
     // deviceready Event Handler
@@ -34,6 +35,10 @@ var app = {
             app.log('Stopped tracking');
             document.getElementById('geoSwitch').innerText = 'Start tracking';
         }
+    },
+
+    onGeoLogClearClicked: function() {
+        document.getElementById('geoLog').innerHTML = '';
     },
 
     // Update DOM on a Received Event

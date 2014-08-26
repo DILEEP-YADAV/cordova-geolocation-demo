@@ -103,8 +103,8 @@ h1 {
   margin-bottom: 40px;
 }
 
-#geoSwitch {
-    width: 200px;
+#geoSwitch, #geoLogClear {
+    width: 120px;
     height: 30px;
     margin-left: 20px;
 }
