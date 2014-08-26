@@ -11,6 +11,12 @@ var app = {
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+
+        document.addEventListener('resign', this.onAppResign);
+        document.addEventListener('pause', this.onAppPause);
+        document.addEventListener('active', this.onAppActive);
+        document.addEventListener('resume', this.onAppResume);
+
         document.getElementById('geoSwitch').addEventListener('click', this.onGeoSwitchClicked);
         document.getElementById('geoLogClear').addEventListener('click', this.onGeoLogClearClicked);
     },
@@ -26,6 +32,22 @@ var app = {
         document.getElementById('main').style.display = 'block';
 
         app.log('--- App started ---');
+    },
+
+    onAppResign: function() {
+        app.log('--- App became inactive ---');
+    },
+
+    onAppPause: function() {
+        app.log('--- App went into background ---');
+    },
+
+    onAppActive: function() {
+        app.log('--- App became active ---');
+    },
+
+    onAppResume: function() {
+        app.log('--- App moved into foreground ---');
     },
 
     onGeoSwitchClicked: function() {
