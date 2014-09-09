@@ -40,6 +40,10 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		874688EED8B6425086E6BA1A /* APPEmailComposer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9609E816524D878DC9FFA3 /* APPEmailComposer.m */; };
 		25E64F12E3AA4B0BB54D1593 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 889B45DDB55043EEA77D581A /* MessageUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E8847DCFAED4450A89866A98 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = B7BCECEEE142451584D745F8 /* CDVLocation.m */; };
+		6436D059EB344C38B9EF21F9 /* CDVBackgroundGeoLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = E194AFEAF63844E1A45800C5 /* CDVBackgroundGeoLocation.m */; };
+		219276B44EB041FF8F1B36C0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 917FB06C36934D068F7D63B8 /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		9221CD532787420C98E9E2E2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EE6BE3F935C4AFAB748B7BA /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +111,12 @@
 		8B9609E816524D878DC9FFA3 /* APPEmailComposer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "APPEmailComposer.m"; path = "de.appplant.cordova.plugin.email-composer/APPEmailComposer.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		FBA170B441504FA5A59430D8 /* APPEmailComposer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "APPEmailComposer.h"; path = "de.appplant.cordova.plugin.email-composer/APPEmailComposer.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		889B45DDB55043EEA77D581A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "MessageUI.framework"; path = "System/Library/Frameworks/MessageUI.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		B7BCECEEE142451584D745F8 /* CDVLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLocation.m"; path = "org.apache.cordova.geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		C825C244D97646ACBE0B0DE4 /* CDVLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLocation.h"; path = "org.apache.cordova.geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		E194AFEAF63844E1A45800C5 /* CDVBackgroundGeoLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVBackgroundGeoLocation.m"; path = "org.transistorsoft.cordova.background-geolocation/CDVBackgroundGeoLocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		04B899E617C4445492D9A84A /* CDVBackgroundGeoLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVBackgroundGeoLocation.h"; path = "org.transistorsoft.cordova.background-geolocation/CDVBackgroundGeoLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		917FB06C36934D068F7D63B8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AudioToolbox.framework"; path = "System/Library/Frameworks/AudioToolbox.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		7EE6BE3F935C4AFAB748B7BA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "AVFoundation.framework"; path = "System/Library/Frameworks/AVFoundation.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +130,8 @@
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */,
 				25E64F12E3AA4B0BB54D1593 /* MessageUI.framework in Frameworks */,
+				219276B44EB041FF8F1B36C0 /* AudioToolbox.framework in Frameworks */,
+				9221CD532787420C98E9E2E2 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +226,8 @@
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				889B45DDB55043EEA77D581A /* MessageUI.framework */,
+				917FB06C36934D068F7D63B8 /* AudioToolbox.framework */,
+				7EE6BE3F935C4AFAB748B7BA /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,6 +245,10 @@
 			children = (
 				8B9609E816524D878DC9FFA3 /* APPEmailComposer.m */,
 				FBA170B441504FA5A59430D8 /* APPEmailComposer.h */,
+				B7BCECEEE142451584D745F8 /* CDVLocation.m */,
+				C825C244D97646ACBE0B0DE4 /* CDVLocation.h */,
+				E194AFEAF63844E1A45800C5 /* CDVBackgroundGeoLocation.m */,
+				04B899E617C4445492D9A84A /* CDVBackgroundGeoLocation.h */,
 			);
 			name = Plugins;
 			path = "CordovaDemo/Plugins";
@@ -426,6 +444,8 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				874688EED8B6425086E6BA1A /* APPEmailComposer.m in Sources */,
+				E8847DCFAED4450A89866A98 /* CDVLocation.m in Sources */,
+				6436D059EB344C38B9EF21F9 /* CDVBackgroundGeoLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
