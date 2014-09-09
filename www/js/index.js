@@ -61,34 +61,78 @@ var app = {
 
     onGeoSwitchClicked: function() {
         if (!app.running) {
-            var options = {};
-
-            var frequency = document.getElementById('optionFrequency').value;
-            if (frequency != '') {
-                options['maximumAge'] = parseInt(frequency, 10);
+            if (document.getElementById('methodJS').checked) {
+                app.startTrackingJS();
+            } else {
+                app.startTrackingNative();
             }
-
-            if (document.getElementById('optionHighAccuracy').checked) {
-                options['enableHighAccuracy'] = true;
-            }
-
-            app.watchId = navigator.geolocation.watchPosition(app.onGeoDataReceived,
-                                                              app.onGeoError,
-                                                              options);
 
             app.running = true;
-            app.log('Started tracking (' + JSON.stringify(options) + ')');
             document.getElementById('geoSwitch').innerText = 'Stop tracking';
         } else {
-            app.running = false;
-            app.log('Stopped tracking');
-            document.getElementById('geoSwitch').innerText = 'Start tracking';
-
-            if (app.watchId) {
-                navigator.geolocation.clearWatch(app.watchId);
-                app.watchId = null;
+            if (document.getElementById('methodJS').checked) {
+                app.stopTrackingJS();
+            } else {
+                app.stopTrackingNative();
             }
+
+            app.running = false;
+            document.getElementById('geoSwitch').innerText = 'Start tracking';
         }
+    },
+
+    startTrackingJS: function() {
+        var options = {};
+
+        var frequency = document.getElementById('optionFrequency').value;
+        if (frequency != '') {
+            options['maximumAge'] = parseInt(frequency, 10);
+        }
+
+        if (document.getElementById('optionHighAccuracy').checked) {
+            options['enableHighAccuracy'] = true;
+        }
+
+        app.watchId = navigator.geolocation.watchPosition(app.onGeoDataReceived,
+                                                          app.onGeoError,
+                                                          options);
+
+        app.log('Started tracking in JS mode (' + JSON.stringify(options) + ')');
+    },
+
+    stopTrackingJS: function() {
+        if (app.watchId) {
+            navigator.geolocation.clearWatch(app.watchId);
+            app.watchId = null;
+            app.log('Stopped tracking in JS mode');
+        }
+    },
+
+    startTrackingNative: function() {
+        /*var options = {};
+
+        var frequency = document.getElementById('optionFrequency').value;
+        if (frequency != '') {
+            options['maximumAge'] = parseInt(frequency, 10);
+        }
+
+        if (document.getElementById('optionHighAccuracy').checked) {
+            options['enableHighAccuracy'] = true;
+        }
+
+        app.watchId = navigator.geolocation.watchPosition(app.onGeoDataReceived,
+                                                          app.onGeoError,
+                                                          options);
+
+        app.log('Started tracking in JS mode (' + JSON.stringify(options) + ')');*/
+    },
+
+    stopTrackingNative: function() {
+        /*if (app.watchId) {
+            navigator.geolocation.clearWatch(app.watchId);
+            app.watchId = null;
+            app.log('Stopped tracking in JS mode');
+        }*/
     },
 
     onGeoDataReceived: function(position) {
