@@ -109,30 +109,41 @@ var app = {
     },
 
     startTrackingNative: function() {
-        /*var options = {};
+        window.plugins.backgroundGeoLocation.configure(
+            app.onNativeDataReceived,
+            app.onGeoError,
+            {
+                url: '???', // <-- only required for Android; ios allows javascript callbacks for your http
+                params: { // HTTP POST params sent to your server when persisting locations.
+                    auth_token: 'user_secret_auth_token',
+                    foo: 'bar'
+                },
+                headers: {
+                    'X-Foo': 'bar'
+                },
+                desiredAccuracy: 10,
+                stationaryRadius: 20,
+                distanceFilter: 30,
+                activityType: "AutomotiveNavigation"
+            }
+        );
 
-        var frequency = document.getElementById('optionFrequency').value;
-        if (frequency != '') {
-            options['maximumAge'] = parseInt(frequency, 10);
-        }
+        window.plugins.backgroundGeoLocation.start();
 
-        if (document.getElementById('optionHighAccuracy').checked) {
-            options['enableHighAccuracy'] = true;
-        }
-
-        app.watchId = navigator.geolocation.watchPosition(app.onGeoDataReceived,
-                                                          app.onGeoError,
-                                                          options);
-
-        app.log('Started tracking in JS mode (' + JSON.stringify(options) + ')');*/
+        app.log('Started tracking in native mode (' + JSON.stringify(options) + ')');*/
     },
 
     stopTrackingNative: function() {
-        /*if (app.watchId) {
-            navigator.geolocation.clearWatch(app.watchId);
-            app.watchId = null;
-            app.log('Stopped tracking in JS mode');
-        }*/
+        window.plugins.backgroundGeoLocation.stop();
+        app.log('Stopped tracking in native mode');
+    },
+
+    onNativeDataReceived: function(data) {
+
+    },
+
+    onNativeDataError: function(error) {
+
     },
 
     onGeoDataReceived: function(position) {
