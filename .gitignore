@@ -1,4 +1,5 @@
 ./build
 *.xcuserdatad
+*.xccheckout
 .DS_Store
 platforms/ios/www
