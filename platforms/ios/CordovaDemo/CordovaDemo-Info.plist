@@ -83,5 +83,7 @@
     <array>
       <string>location</string>
     </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Zoomer requires access to your location data to operate properly.</string>
   </dict>
 </plist>

@@ -147,10 +147,31 @@
 - (void) start:(CDVInvokedUrlCommand*)command
 {
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-
     NSLog(@"- CDVBackgroundGeoLocation start (background? %ld)", state);
 
-    [self startUpdatingLocation];
+    if (![CLLocationManager locationServicesEnabled]) {
+        NSLog(@"CDVBackgroundGeoLocation start: error: location services disabled");
+        // TODO: notify JS
+        return;
+    }
+
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusAuthorized:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+            [self startUpdatingLocation];
+            break;
+
+        case kCLAuthorizationStatusNotDetermined:
+            NSLog(@"CDVBackgroundGeoLocation start: requesting authorization");
+            [locationManager requestWhenInUseAuthorization];
+            [self startUpdatingLocation];
+            break;
+
+        default:
+            NSLog(@"CDVBackgroundGeoLocation start: error: location tracking authorization denied");
+            // TODO: notify JS
+            return;
+    }
 
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
@@ -377,6 +398,32 @@
 
     if (isDebugging) {
         [self notify:[NSString stringWithFormat:@"Authorization status changed %u", status]];
+    }
+
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusAuthorized:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+            NSLog(@"CDVBackgroundGeoLocation didChangeAuthorizationStatus: authorization granted");
+
+            if (isUpdatingLocation) {
+                [self startUpdatingLocation];
+            }
+
+            break;
+
+        case kCLAuthorizationStatusDenied:
+        case kCLAuthorizationStatusRestricted:
+            NSLog(@"CDVBackgroundGeoLocation didChangeAuthorizationStatus: authorization denied");
+            // TODO: notify JS
+
+            if (isUpdatingLocation) {
+                [self stopUpdatingLocation];
+            }
+
+            break;
+
+        default:
+            break;
     }
 }
 
