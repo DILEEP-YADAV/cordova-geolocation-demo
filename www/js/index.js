@@ -20,6 +20,8 @@ var app = {
         document.getElementById('geoSwitch').addEventListener('click', this.onGeoSwitchClicked);
         document.getElementById('geoLogClear').addEventListener('click', this.onGeoLogClearClicked);
         document.getElementById('sendEmail').addEventListener('click', this.onSendEmailClicked);
+        document.getElementById('methodJS').addEventListener('click', this.onMethodJSSelected);
+        document.getElementById('methodNative').addEventListener('click', this.onMethodNativeSelected);
     },
 
     // deviceready Event Handler
@@ -49,6 +51,16 @@ var app = {
 
     onAppResume: function() {
         app.log('--- App moved into foreground ---');
+    },
+
+    onMethodJSSelected: function() {
+        document.getElementById('jsOptions').style.display = 'block';
+        document.getElementById('nativeOptions').style.display = 'none';
+    },
+
+    onMethodNativeSelected: function() {
+        document.getElementById('jsOptions').style.display = 'none';
+        document.getElementById('nativeOptions').style.display = 'block';
     },
 
     onSendEmailClicked: function() {
@@ -114,6 +126,19 @@ var app = {
             distanceFilter: 0,
             activityType: "AutomotiveNavigation"
         };
+
+        var distanceFilter = document.getElementById('distanceFilter').value;
+        if (distanceFilter != '') {
+            options['distanceFilter'] = parseInt(distanceFilter, 10);
+        }
+
+        if (document.getElementById('accuracy10').checked) {
+            options['desiredAccuracy'] = 10;
+        } else if (document.getElementById('accuracy100').checked) {
+            options['desiredAccuracy'] = 100;
+        } else if (document.getElementById('accuracy1000').checked) {
+            options['desiredAccuracy'] = 1000;
+        }
 
         window.plugins.backgroundGeoLocation.configure(app.onNativeDataReceived, app.onNativeDataError, options);
         window.plugins.backgroundGeoLocation.start();

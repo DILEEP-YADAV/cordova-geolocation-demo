@@ -11,12 +11,6 @@
         <p class="loading">Loading...</p>
 
         <div id="main" style="display: none;">
-            <p>
-                Geolocation method:
-                <input type="radio" name="method" value="js" id="methodJS" checked> JavaScript
-                <input type="radio" name="method" value="native" id="methodNative"> Native
-            </p>
-
             <p id="buttons">
                 <button id="geoSwitch">Start tracking</button>
                 <button id="geoLogClear">Clear log</button>
@@ -24,8 +18,25 @@
             </p>
 
             <p>
+                Geolocation method:
+                <input type="radio" name="method" value="js" id="methodJS" checked> JavaScript
+                <input type="radio" name="method" value="native" id="methodNative"> Native
+            </p>
+
+            <p id="jsOptions">
                 <input type="checkbox" id="optionHighAccuracy"> High accuracy<br>
                 Frequency (ms): <input type="text" id="optionFrequency">
+            </p>
+
+            <p id="nativeOptions" style="display: none;">
+                Accuracy (m):
+                <input type="radio" name="accuracy" value="0" id="accuracy0" checked> 0
+                <input type="radio" name="accuracy" value="10" id="accuracy10"> 10
+                <input type="radio" name="accuracy" value="100" id="accuracy100"> 100
+                <input type="radio" name="accuracy" value="1000" id="accuracy1000"> 1000
+                <br>
+
+                Distance filter (m): <input type="text" id="distanceFilter">
             </p>
 
             <div id="geoLog"></div>
