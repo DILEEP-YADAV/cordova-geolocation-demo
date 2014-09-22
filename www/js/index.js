@@ -118,7 +118,7 @@ var app = {
         window.plugins.backgroundGeoLocation.configure(app.onNativeDataReceived, app.onNativeDataError, options);
         window.plugins.backgroundGeoLocation.start();
 
-        app.log('Started tracking in native mode (' + JSON.stringify(options) + ')');
+        app.log('Started tracking in native mode (' + app.printJSON(options) + ')');
     },
 
     stopTrackingNative: function() {
@@ -127,7 +127,9 @@ var app = {
     },
 
     onNativeDataReceived: function(data) {
-        app.log('Received data: ' + JSON.stringify(data));
+        app.log('Lat: ' + data.latitude + ' Lng: ' + data.longitude +
+                ' Acc: ' + data.accuracy + ' Spd: ' + data.speed);
+
         window.plugins.backgroundGeoLocation.finish();
     },
 
@@ -163,6 +165,10 @@ var app = {
         }
 
         return s;
+    },
+
+    printJSON: function(data) {
+        return JSON.stringify(data).replace(new RegExp(',"', 'g'), ', "');
     },
 
     log: function(text) {
