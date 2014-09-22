@@ -22,6 +22,12 @@
     <feature name="EmailComposer">
         <param name="ios-package" value="APPEmailComposer" />
     </feature>
+    <feature name="Geolocation">
+        <param name="ios-package" value="CDVLocation" />
+    </feature>
+    <feature name="BackgroundGeoLocation">
+        <param name="ios-package" value="CDVBackgroundGeoLocation" />
+    </feature>
     <name>CordovaDemo</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -31,10 +37,4 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <feature name="Geolocation">
-        <param name="ios-package" value="CDVLocation" />
-    </feature>
-    <feature name="BackgroundGeoLocation">
-        <param name="ios-package" value="CDVBackgroundGeoLocation" />
-    </feature>
 </widget>
