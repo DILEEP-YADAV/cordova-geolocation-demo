@@ -109,28 +109,16 @@ var app = {
     },
 
     startTrackingNative: function() {
-        window.plugins.backgroundGeoLocation.configure(
-            app.onNativeDataReceived,
-            app.onGeoError,
-            {
-                url: '???', // <-- only required for Android; ios allows javascript callbacks for your http
-                params: { // HTTP POST params sent to your server when persisting locations.
-                    auth_token: 'user_secret_auth_token',
-                    foo: 'bar'
-                },
-                headers: {
-                    'X-Foo': 'bar'
-                },
-                desiredAccuracy: 10,
-                stationaryRadius: 20,
-                distanceFilter: 30,
-                activityType: "AutomotiveNavigation"
-            }
-        );
+        var options = {
+            desiredAccuracy: 0,
+            distanceFilter: 0,
+            activityType: "AutomotiveNavigation"
+        };
 
+        window.plugins.backgroundGeoLocation.configure(app.onNativeDataReceived, app.onNativeDataError, options);
         window.plugins.backgroundGeoLocation.start();
 
-        app.log('Started tracking in native mode (' + JSON.stringify(options) + ')');*/
+        app.log('Started tracking in native mode (' + JSON.stringify(options) + ')');
     },
 
     stopTrackingNative: function() {
@@ -139,11 +127,13 @@ var app = {
     },
 
     onNativeDataReceived: function(data) {
-
+        app.log('Received data: ' + JSON.stringify(data));
+        window.plugins.backgroundGeoLocation.finish();
     },
 
     onNativeDataError: function(error) {
-
+        // currently not called
+        app.log('Error: ' + error);
     },
 
     onGeoDataReceived: function(position) {
