@@ -11,6 +11,11 @@
 #define locationSyncSound       1004
 #define locationErrorSound      1073
 
+#define LocationServicesDisabledError 1
+#define LocationAccessDeniedError     2
+#define LocationAccessRestrictedError 3
+
+
 @implementation CDVBackgroundGeoLocation {
     BOOL isDebugging;
     BOOL isUpdatingLocation;
@@ -147,11 +152,11 @@
 - (void) start:(CDVInvokedUrlCommand*)command
 {
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-    NSLog(@"- CDVBackgroundGeoLocation start (background? %ld)", state);
+    NSLog(@"- CDVBackgroundGeoLocation start (background? %ld)", (long) state);
 
     if (![CLLocationManager locationServicesEnabled]) {
         NSLog(@"CDVBackgroundGeoLocation start: error: location services disabled");
-        // TODO: notify JS
+        [self callErrorCallbackWithCode:LocationServicesDisabledError];
         return;
     }
 
@@ -167,15 +172,46 @@
             [self startUpdatingLocation];
             break;
 
-        default:
+        case kCLAuthorizationStatusDenied: {
             NSLog(@"CDVBackgroundGeoLocation start: error: location tracking authorization denied");
-            // TODO: notify JS
+            [self callErrorCallbackWithCode:LocationAccessDeniedError];
             return;
+        }
+
+        case kCLAuthorizationStatusRestricted: {
+            NSLog(@"CDVBackgroundGeoLocation start: error: location tracking is restricted on the device");
+            [self callErrorCallbackWithCode:LocationAccessRestrictedError];
+            return;
+        }
     }
 
     CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
 }
+
+- (void)callErrorCallbackWithCode:(NSInteger)errorCode {
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+
+    data[@"code"] = @(errorCode);
+
+    switch (errorCode) {
+        case LocationServicesDisabledError:
+            data[@"message"] = @"Location services are disabled";
+            break;
+
+        case LocationAccessDeniedError:
+            data[@"message"] = @"User has denied access to location data";
+            break;
+
+        case LocationAccessRestrictedError:
+            data[@"message"] = @"Location data access is restricted on the device";
+            break;
+    }
+
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:data];
+    [self.commandDelegate sendPluginResult:result callbackId:self.syncCallbackId];
+}
+
 
 /**
  * Turn it off
@@ -412,9 +448,18 @@
             break;
 
         case kCLAuthorizationStatusDenied:
-        case kCLAuthorizationStatusRestricted:
             NSLog(@"CDVBackgroundGeoLocation didChangeAuthorizationStatus: authorization denied");
-            // TODO: notify JS
+            [self callErrorCallbackWithCode:LocationAccessDeniedError];
+
+            if (isUpdatingLocation) {
+                [self stopUpdatingLocation];
+            }
+
+            break;
+
+        case kCLAuthorizationStatusRestricted:
+            NSLog(@"CDVBackgroundGeoLocation didChangeAuthorizationStatus: access restricted");
+            [self callErrorCallbackWithCode:LocationAccessRestrictedError];
 
             if (isUpdatingLocation) {
                 [self stopUpdatingLocation];

@@ -159,8 +159,10 @@ var app = {
     },
 
     onNativeDataError: function(error) {
-        // currently not called
-        app.log('Error: ' + error);
+        app.log('Error ' + error.code + ': ' + error.message);
+
+        app.running = false;
+        document.getElementById('geoSwitch').innerText = 'Start tracking';
     },
 
     onGeoDataReceived: function(position) {
