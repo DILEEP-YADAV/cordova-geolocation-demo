@@ -360,12 +360,13 @@
 - (void) stopBackgroundTask
 {
     UIApplication *app = [UIApplication sharedApplication];
-    NSLog(@"- CDVBackgroundGeoLocation stopBackgroundTask (remaining t: %f)", app.backgroundTimeRemaining);
+
     if (bgTask != UIBackgroundTaskInvalid)
     {
         [app endBackgroundTask:bgTask];
         bgTask = UIBackgroundTaskInvalid;
     }
+
     [self flushQueue];
 }
 
