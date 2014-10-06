@@ -389,7 +389,9 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"- CDVBackgroundGeoLocation locationManager failed:  %@", error);
+    if (error.code != kCLErrorLocationUnknown) {
+        NSLog(@"CDVBackgroundGeoLocation locationManager failed: %@", error);
+    }
 
     if (isDebugging) {
         AudioServicesPlaySystemSound (locationErrorSound);
@@ -398,6 +400,9 @@
 
     switch (error.code) {
         case kCLErrorLocationUnknown:
+            NSLog(@"CDVBackgroundGeoLocation locationManager: can't determine user's location, will keep trying...");
+            break;
+
         case kCLErrorNetwork:
         case kCLErrorRegionMonitoringDenied:
         case kCLErrorRegionMonitoringSetupDelayed:
